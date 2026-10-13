@@ -1,0 +1,9 @@
+node_modules/
+# Sessão do navegador (cookies/tokens) — nunca versionar
+.auth/
+# Amostra da voz e trilha ficam só na máquina
+voz/
+trilha/
+# Intermediários pesados
+saida/.cache/
+saida/previas/

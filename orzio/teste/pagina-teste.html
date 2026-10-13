@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orzio — Ari</title>
+<style>
+  body { margin: 0; font: 15px/1.4 Inter, system-ui, sans-serif; background: #0b0f0e; color: #e5e7eb; display: flex; min-height: 100vh; }
+  aside { width: 240px; background: #111816; padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+  aside a { color: #a7f3d0; text-decoration: none; display: block; }
+  .rodape { margin-top: auto; border-top: 1px solid #234; padding-top: 12px; }
+  main { flex: 1; padding: 24px; }
+  header { display: flex; justify-content: space-between; align-items: center; }
+  .avatar { width: 36px; height: 36px; border-radius: 50%; background: #10b981; display: grid; place-items: center; font-weight: 700; color: #052e1f; }
+  .card { background: #131c19; border-radius: 12px; padding: 14px; margin: 10px 0; }
+  button { margin: 4px; padding: 8px 12px; border-radius: 8px; border: 0; background: #1f2937; color: #fff; }
+  .alto { height: 1400px; }
+</style>
+</head>
+<body>
+  <aside data-sidebar="sidebar">
+    <button id="modo">Pessoal</button>
+    <a href="/app">Dashboard</a>
+    <a href="/app/transacoes">Transações</a>
+    <a href="/app/whatsapp">Assistente WhatsApp</a>
+    <div class="grupo"><div class="titulo-grupo">DONO</div><a href="/app/admin">Painel do dono</a></div>
+    <div class="rodape" data-sidebar="footer">
+      <div><div class="nome">Ari Souza</div><div class="email">ari.teste@exemplo.com</div></div>
+    </div>
+  </aside>
+  <main>
+    <header>
+      <h1>Olá, Ari</h1>
+      <span class="avatar" title="Ari Souza">AS</span>
+    </header>
+    <div class="card">CPF: 123.456.789-09 · CNPJ: 12.345.678/0001-95 · CPF sem pontos 52998224725</div>
+    <div class="card">Telefones: +55 81 99876-5432 · 5581998765432 · (81) 99876-5432 · 81 3333-4444 · +55 (81) 9 9876-5432</div>
+    <div class="card">Cartões: Nubank •••• 4321 · Inter **** 8765 · Cartão final 9876</div>
+    <div class="card">Valores: R$ 1.234,56 · R$ 89,90 · R$ 12.345.678,90 · 13/10/2026 · 2025-2026 · Salário · Variável · 3/5 pagas</div>
+    <div class="card" id="dinamico">Carregando…</div>
+    <input id="campo" value="ari.teste@exemplo.com">
+    <a id="whats" href="https://wa.me/5581998765432"><svg class="lucide lucide-message-circle" width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#25d366"/></svg> Falar no WhatsApp +55 81 99876-5432</a>
+    <div>
+      <button id="b-salvar">Salvar</button>
+      <button id="b-adicionar">+ Adicionar transação</button>
+      <button id="b-sair">Sair</button>
+      <button id="b-excluir" aria-label="Excluir"><svg class="lucide lucide-trash-2" width="16" height="16"></svg></button>
+      <button id="b-cancelar">Cancelar</button>
+      <button id="b-importar">Importar nota</button>
+      <button id="b-assinatura">Cancelar assinatura</button>
+    </div>
+    <form id="formulario"><input name="valor" value="10"><button id="b-enviar" type="submit">Confirmar</button></form>
+    <div class="alto"></div>
+    <h2>Gastos por categoria</h2>
+  </main>
+<script>
+  window.__acionou = [];
+  for (const b of document.querySelectorAll('button')) b.addEventListener('click', () => window.__acionou.push(b.id));
+  document.getElementById('formulario').addEventListener('submit', (e) => { e.preventDefault(); window.__acionou.push('submit'); });
+  setTimeout(() => {
+    const p = document.createElement('p');
+    p.textContent = 'Bem-vindo de volta, Ari! Seu e-mail é ari@x.com';
+    document.querySelector('main').appendChild(p);
+  }, 200);
+  setTimeout(() => {
+    document.getElementById('dinamico').firstChild.nodeValue = 'Telefone do assistente: 81 99876-5432';
+    document.querySelector('.avatar').setAttribute('title', 'ARI SOUZA');
+  }, 400);
+</script>
+</body>
+</html>
