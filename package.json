@@ -3,13 +3,12 @@
   "private": true,
   "type": "module",
   "description": "Produção automática dos vídeos de venda da Orzio (VSL, Reels/TikTok e Stories)",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
-    "login": "node orzio/scripts/login.mjs",
-    "voz": "node orzio/scripts/voz.mjs",
     "narracao": "node orzio/scripts/narracao.mjs",
-    "capturar": "node orzio/scripts/capturar.mjs",
-    "graficos": "node orzio/scripts/graficos.mjs",
+    "rascunho": "node orzio/scripts/montar.mjs --rascunho",
     "aprovar": "node orzio/scripts/aprovar.mjs",
     "montar": "node orzio/scripts/montar.mjs",
     "verificar": "node orzio/scripts/verificar.mjs",
