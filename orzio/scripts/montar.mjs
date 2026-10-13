@@ -128,7 +128,10 @@ async function montarVideo(video, formato, { rascunho, verificar }) {
   // 3) Áudio: cada fala no início da sua cena; trilha opcional a -20 dB.
   const audio = path.join(tmp, `${video.id}_${formato}_audio.wav`);
   const falas = plano.cenas.filter((c) => c.audio);
-  const trilhas = fs.existsSync(PASTAS.trilha) ? fs.readdirSync(PASTAS.trilha).filter((a) => /\.(mp3|wav|m4a|aac|ogg)$/i.test(a)) : [];
+  // Trilha: trilha/vsl.* na VSL, trilha/curtos.* nos demais; senão, qualquer arquivo de áudio da pasta.
+  const audios = fs.existsSync(PASTAS.trilha) ? fs.readdirSync(PASTAS.trilha).filter((a) => /^[^.].*\.(mp3|wav|m4a|aac|ogg)$/i.test(a)).sort() : [];
+  const preferida = video.id.startsWith('vsl') ? 'vsl' : 'curtos';
+  const trilhas = audios.filter((a) => a.startsWith(`${preferida}.`)).concat(audios.filter((a) => !a.startsWith(`${preferida}.`)));
   const D = plano.dur.toFixed(3);
   const entradas = [];
   const filtros = [];
