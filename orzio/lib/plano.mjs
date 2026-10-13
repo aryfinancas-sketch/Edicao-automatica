@@ -68,7 +68,8 @@ export function planejar(video, formato, { rascunho = false } = {}) {
     }
     const temFinal = cena.visual.some(ehFinal);
     const ultima = i === video.cenas.length - 1;
-    let dur = cena.fala ? FOLGA_INICIO + falaDur + FOLGA_FIM : DURACAO_MIN_CARTAO_FINAL;
+    // "respiro": segundos extras de imagem depois da fala (com a trilha por baixo).
+    let dur = (cena.fala ? FOLGA_INICIO + falaDur + FOLGA_FIM : DURACAO_MIN_CARTAO_FINAL) + (cena.respiro || 0);
     if (temFinal && cena.visual.length > 1) dur = Math.max(dur, DURACAO_MIN_CARTAO_FINAL + 1.5);
     if (temFinal) dur = Math.max(dur, DURACAO_MIN_CARTAO_FINAL);
     if (ultima) dur += 0.6;

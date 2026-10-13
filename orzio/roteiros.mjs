@@ -169,11 +169,11 @@ export const VIDEOS = [
     formatos: ['vertical'],
     arquivo: () => 'reels_1_whatsapp.mp4',
     cenas: [
-      { fala: 'Eu organizo minhas finanças sem abrir nenhum app.', titulo: 'Controle financeiro *sem abrir app*', visual: [grafico('whatsapp', { cena: 'segurando-audio' })] },
-      { fala: 'Gastei no mercado? Mando um áudio no WhatsApp e pronto. A IA entende, classifica e lança.', titulo: 'Gastei 89,90 no mercado *✓ Lançado*', visual: [grafico('whatsapp', { cena: 'mercado-credito' })] },
-      { fala: 'Também funciona com texto ou com a foto da notinha.', titulo: 'Áudio · texto · *foto da nota*', visual: [grafico('whatsapp', { cena: 'foto-nota' })] },
-      { fala: 'E no painel eu vejo tudo atualizado: quanto entrou, quanto saiu e onde estou gastando mais.', titulo: 'Tudo atualizado *na hora*', visual: [tela([PLANO.entradasSaidas, PLANO.categorias])] },
-      { fala: 'Chama Orzio. Testa grátis no link da bio.', titulo: null, visual: [FINAL()] },
+      { fala: 'Eu organizo minhas finanças sem abrir nenhum app.', titulo: 'Controle financeiro *sem abrir app*', respiro: 1.0, visual: [grafico('whatsapp', { cena: 'segurando-audio' })] },
+      { fala: 'Gastei no mercado? Mando um áudio no WhatsApp e pronto. A IA entende, classifica e lança.', titulo: 'Gastei 89,90 no mercado *✓ Lançado*', respiro: 2.0, visual: [grafico('whatsapp', { cena: 'mercado-credito' })] },
+      { fala: 'Também funciona com texto ou com a foto da notinha.', titulo: 'Áudio · texto · *foto da nota*', respiro: 2.0, visual: [grafico('whatsapp', { cena: 'foto-nota' })] },
+      { fala: 'E no painel eu vejo tudo atualizado: quanto entrou, quanto saiu e onde estou gastando mais.', titulo: 'Tudo atualizado *na hora*', respiro: 1.0, visual: [tela([PLANO.entradasSaidas, PLANO.categorias])] },
+      { fala: 'Chama Orzio. Testa grátis no link da bio.', titulo: null, respiro: 1.0, visual: [FINAL()] },
     ],
   },
 
