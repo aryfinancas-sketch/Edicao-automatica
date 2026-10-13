@@ -1,0 +1,4 @@
+1
+00:00:00,230 --> 00:00:03,594
+Sinceramente: você sabe
+quanto gastou esse mês?
