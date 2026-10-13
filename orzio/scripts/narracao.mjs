@@ -10,11 +10,13 @@
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { ELEVENLABS, PASTAS, RAIZ } from '../config.mjs';
 import { VIDEOS, analisarFala, falasEmOrdem } from '../roteiros.mjs';
 import { arquivosNarracao } from '../lib/plano.mjs';
 import { argumentos, duracao, ffmpeg, garantirPasta, salvarJson } from '../lib/util.mjs';
 
+const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const args = argumentos();
 const falas = falasEmOrdem();
 
@@ -53,12 +55,22 @@ async function porArquivo() {
     fs.writeFileSync(lista, arquivos.map((a) => `file '${a}'`).join('\n'));
     ffmpeg(['-f', 'concat', '-safe', '0', '-i', lista, '-ar', '44100', '-ac', '1', fonte]);
   }
-  const r = segmentar(fonte, falas.length);
-  if (!r) {
-    const p = detectarPausas(fonte, -40, 1.0).length + 1;
-    throw new Error(`Esperava ${falas.length} falas separadas por pausas, mas encontrei cerca de ${p}. Confira se o texto foi colado inteiro, com as pausas.`);
+  let r = segmentar(fonte, falas.length);
+  if (r) {
+    console.log(`${falas.length} falas encontradas (pausas ≥ ${r.minPausa}s, ${r.ruido} dB)`);
+  } else {
+    // Sem pausas longas (alguns modelos ignoram <break>): alinha pelo texto.
+    console.log('Sem pausas longas entre as falas; alinhando pelo texto…');
+    const textos = falas.map((f) => analisarFala(VIDEOS.find((v) => v.id === f.video).cenas[f.indice].fala).falado);
+    const arqFalas = path.join(garantirPasta(PASTAS.cache), 'falas.json');
+    const arqCortes = path.join(PASTAS.cache, 'cortes.json');
+    fs.writeFileSync(arqFalas, JSON.stringify(textos));
+    const extra = args.ajustes ? [path.resolve(args.ajustes)] : [];
+    const p = spawnSync('python3', [path.join(AQUI, '..', 'lib', 'alinhar_texto.py'), fonte, arqFalas, arqCortes, ...extra], { encoding: 'utf8' });
+    if (p.status !== 0) throw new Error(p.stderr);
+    console.log(p.stdout);
+    r = { trechos: JSON.parse(fs.readFileSync(arqCortes, 'utf8')).map(([ini, fim]) => ({ ini, fim })) };
   }
-  console.log(`${falas.length} falas encontradas (pausas ≥ ${r.minPausa}s, ${r.ruido} dB)`);
   const pad = 0.08;
   falas.forEach((f, i) => {
     const t = r.trechos[i];

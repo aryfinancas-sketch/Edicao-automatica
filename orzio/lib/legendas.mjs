@@ -44,8 +44,16 @@ export function quebrarLinhas(texto, max) {
   return linhas;
 }
 
-function tituloAss(titulo, max) {
-  return quebrarLinhas(titulo, max).join('\\N')
+// Títulos longos diminuem a fonte para caber em no máximo 2 linhas.
+function tituloAss(titulo, max, tam) {
+  let linhas = quebrarLinhas(titulo, max);
+  let prefixo = '';
+  for (const fator of [0.85, 0.72, 0.62]) {
+    if (linhas.length <= 2) break;
+    linhas = quebrarLinhas(titulo, Math.floor(max / fator));
+    prefixo = `{\\fs${Math.round(tam * fator)}}`;
+  }
+  return prefixo + linhas.join('\\N')
     .replace(/\*([^*]+)\*/g, `{\\c${VERDE_ASS}}$1{\\c${BRANCO_ASS}}`);
 }
 
@@ -110,7 +118,7 @@ export function gerarLegendas(plano) {
       if (formato === 'horizontal') {
         eventos.push(`Dialogue: 0,${tempoAss(ini)},${tempoAss(fim)},Faixa,,0,0,0,,{\\fad(200,150)\\an7\\pos(0,0)\\bord0\\shad0\\1c&H000000&\\1a&H50&\\blur30\\p1}m 0 0 l ${f.largura} 0 ${f.largura} 230 0 230{\\p0}`);
       }
-      eventos.push(`Dialogue: 1,${tempoAss(ini)},${tempoAss(fim)},Titulo,,0,0,0,,{\\fad(220,160)\\fscx92\\fscy92\\t(0,280,\\fscx100\\fscy100)}${tituloAss(cena.titulo, L.titulo.porLinha)}`);
+      eventos.push(`Dialogue: 1,${tempoAss(ini)},${tempoAss(fim)},Titulo,,0,0,0,,{\\fad(220,160)\\fscx92\\fscy92\\t(0,280,\\fscx100\\fscy100)}${tituloAss(cena.titulo, L.titulo.porLinha, L.titulo.tam)}`);
     }
     if (!cena.fala.exibido) continue;
     const palavras = temposDasPalavras(cena);
