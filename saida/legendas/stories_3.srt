@@ -1,0 +1,4 @@
+1
+00:00:00,230 --> 00:00:03,237
+E o painel mostra tudo
+atualizado na hora.
