@@ -199,7 +199,7 @@ function roteiroWhats(cena, D) {
 function htmlWhats(op, formato, D) {
   const r = roteiroWhats(op.cena, D);
   const v = formato === 'vertical';
-  const tel = v ? { w: 360, h: 540, x: 90, y: 155 } : { w: 290, h: 455, x: 300, y: 52 };
+  const tel = v ? { w: 360, h: 540, x: 90, y: 155 } : { w: 270, h: 410, x: 310, y: 52 };
   const escala = v ? 1 : 0.86;
   const gIni = r.gravacao ? r.gravacao[0] : -1;
   const gFim = r.gravacao ? r.gravacao[1] : -1;
@@ -326,10 +326,10 @@ function htmlLogo(op, formato) {
 
 function htmlFinal(op, formato, D) {
   const v = formato === 'vertical';
-  const topo = op.espacoInferior ? (v ? 250 : 90) : (v ? 270 : 95);
+  const topo = op.espacoInferior ? (v ? 250 : 60) : (v ? 270 : 58);
   return {
-    css: `.cartao { position: absolute; left: 0; right: 0; top: ${topo}px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: ${v ? 22 : 16}px; }
-      .cartao h1 { font-size: ${v ? 44 : 46}px; font-weight: 900; line-height: 1.08; letter-spacing: -.02em; }
+    css: `.cartao { position: absolute; left: 0; right: 0; top: ${topo}px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: ${v ? 22 : 13}px; }
+      .cartao h1 { font-size: ${v ? 44 : 40}px; font-weight: 900; line-height: 1.08; letter-spacing: -.02em; }
       .cartao h1 em { font-style: normal; color: #10b981; }
       .cta { background: #fff; color: #050807; font-weight: 700; font-size: ${v ? 20 : 19}px; padding: 15px 28px; border-radius: 14px; display: flex; align-items: center; gap: 10px;
         box-shadow: 0 0 0 6px rgba(16,185,129,.18), 0 20px 50px rgba(0,0,0,.5); }
